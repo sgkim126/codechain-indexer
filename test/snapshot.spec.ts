@@ -85,6 +85,7 @@ describe("snapshot synchronized", function() {
     });
 
     it("Get the transfer block by timestamp", async function() {
+        await new Promise(resolve => setTimeout(resolve, 100));
         const block = await BlockModel.getByTime(transferBlock.timestamp);
         expect(block).not.null;
     });
