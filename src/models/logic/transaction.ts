@@ -461,9 +461,11 @@ async function getTransactionHashes(params: {
     const { page, itemsPerPage, address, addressFilter, assetType } = params;
     try {
         return await models.Transaction.findAll({
+            subQuery: false,
             attributes: ["hash", "blockNumber", "transactionIndex"],
             where,
             order: [["blockNumber", "DESC"], ["transactionIndex", "DESC"]],
+            group: ["Transaction.hash", "Transaction.blockNumber", "Transaction.transactionIndex"],
             limit: itemsPerPage,
             offset: (page - 1) * itemsPerPage,
             include: buildIncludeArray({ address, addressFilter, assetType })
